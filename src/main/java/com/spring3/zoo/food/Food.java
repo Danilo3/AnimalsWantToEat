@@ -1,5 +1,6 @@
 package com.spring3.zoo.food;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +11,9 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
 public class Food {
+
     private LocalDateTime expiredDate;
     private FoodType foodType;
     private Integer value;

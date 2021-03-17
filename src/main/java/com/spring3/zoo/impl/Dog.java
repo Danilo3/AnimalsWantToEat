@@ -1,28 +1,23 @@
 package com.spring3.zoo.impl;
 
 import com.spring3.aspect.annotationMarker.VoicingMethod;
-import com.spring3.zoo.Animal;
 import com.spring3.zoo.food.Food;
-import com.spring3.zoo.food.FoodRottenException;
 import com.spring3.zoo.food.FoodType;
-import com.spring3.zoo.food.FoodTypeMismatchedException;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
 @Getter
 @Setter
-public class Dog implements Animal {
-    private Food food;
-    private Integer age = 5;
+public class Dog extends AbstractAnimal {
+    private Food food = new Food(null, FoodType.MEAT, null);
+    private String name= "Dog";
     private Integer eatingSpeed = 200;
-    private FoodType foodType = FoodType.MEAT;
     private AtomicInteger hungerLevel = new AtomicInteger(500);
     private Integer hungerCritical = 1000;
     private Integer hungerSpeed = 300;
@@ -35,14 +30,10 @@ public class Dog implements Animal {
 
     @Override
     public void feed(Food food) {
-        if (food.getFoodType().equals(this.foodType)) {
-            this.food = food;
-        }
-        else {
-            throwException(new FoodTypeMismatchedException("[FEED ERROR]" + getName() + "dont eat food :" + food.getFoodType().toString()));
-        }
+        feedWithArgs(food, this.food);
     }
 
+    @Override
     public boolean eat() {
         return eatWithArgs(food, hungerLevel, eatingSpeed);
     }
@@ -58,14 +49,13 @@ public class Dog implements Animal {
         return hungerLevel.get() >= hungerCritical;
     }
 
+    @Override
+    public FoodType getFoodType() {
+        return this.food.getFoodType();
+    }
 
     public String getName() {
-        return "[" + this.getClass().getSimpleName() + "] ";
+        return "[" + name + "] ";
     }
 
-
-    @Override
-    public void throwException(Exception e) {
-
-    }
 }

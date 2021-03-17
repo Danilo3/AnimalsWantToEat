@@ -16,10 +16,10 @@ import java.util.Random;
 @EnableAsync
 public class ZooKeeper {
 
-    AnimalAsyncService animalService;
+    AnimalService animalService;
 
     @Autowired
-    ZooKeeper(AnimalAsyncService animalService) {
+    ZooKeeper(AnimalService animalService) {
         this.animalService = animalService;
     }
 

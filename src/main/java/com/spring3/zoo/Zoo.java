@@ -45,27 +45,6 @@ public class Zoo {
         this.eventPublisher = eventPublisher;
     }
 
-    public Animal getAnimal1() {
-        return animal1;
-    }
-
-    public Animal getAnimal2() {
-        return animal2;
-    }
-
-    public Animal getAnimal3() {
-        return animal3;
-    }
-
-    public List<Animal> getAnimals() {
-        return animals;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-
     @Async
     @Scheduled(cron = "0/5 * * * * * ")
     public void checkIfHungry() {

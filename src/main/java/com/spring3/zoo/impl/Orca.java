@@ -4,7 +4,6 @@ import com.spring3.aspect.annotationMarker.VoicingMethod;
 import com.spring3.zoo.Animal;
 import com.spring3.zoo.food.FoodTypeMismatchedException;
 import com.spring3.zoo.food.Food;
-import com.spring3.zoo.food.FoodRottenException;
 import com.spring3.zoo.food.FoodType;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,8 +20,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Getter
 @Setter
 @EnableAsync
-public class Orca implements Animal {
-    private Food food;
+public class Orca extends AbstractAnimal {
+    private Food food = new Food(null, FoodType.FISH, null);
+    private String name = "Orca";
     private Integer age = 23;
     private Integer eatingSpeed = 750;
     private FoodType foodType = FoodType.FISH;
@@ -39,12 +39,7 @@ public class Orca implements Animal {
 
     @Override
     public void feed(Food food) {
-        if (food.getFoodType().equals(this.foodType)) {
-            this.food = food;
-        }
-        else {
-            throwException(new FoodTypeMismatchedException("[FEED ERROR]" + getName() + "dont eat food :" + food.getFoodType().toString()));
-        }
+        feedWithArgs(food, this.food);
     }
 
     public boolean eat() {
@@ -64,12 +59,7 @@ public class Orca implements Animal {
 
 
     public String getName() {
-        return "[" + this.getClass().getSimpleName() + "] ";
+        return "[" + name + "] ";
     }
 
-
-    @Override
-    public void throwException(Exception e) {
-
-    }
 }
